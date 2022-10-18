@@ -20,4 +20,8 @@ done
 
 sed -i -e 's/jpg/txt/g' randomset
 
-while read f; do mv labels/$f images_val/; done < randomset
+while read f; do
+    mv labels/$f images_val/;
+done < randomset
+
+rm randomset
