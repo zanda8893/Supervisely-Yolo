@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from os import listdir, remove
+import sys
 import json
 
 base_dir = "./"
@@ -45,13 +46,16 @@ def convert(folders):  # folders is a list of strings
 if __name__ == '__main__':
     folders = sorted(listdir(base_dir))  # Load folders from base directory
 
-    print("Select which folder to convert or * to convert all")
-    for num, filename in enumerate(folders):  # print list of folders to select from
-        print("    ", filename, " ", num)
+    if "--no-interactive" not in sys.argv:
+        print("Select which folder to convert or * to convert all")
+        for num, filename in enumerate(folders):  # print list of folders to select from
+            print("    ", filename, " ", num)
 
-    choice = str(input("Enter choice: "))
+        choice = str(input("Enter choice: "))
 
-    if choice == "*":  # if all folders are selected
-        convert(folders)
-    else:  # if a specific folder is selected
-        convert([folders[int(choice)]])
+        if choice == "*":  # if all folders are selected
+            convert(folders)
+        else:  # if a specific folder is selected
+            convert([folders[int(choice)]])
+
+    convert(folders)

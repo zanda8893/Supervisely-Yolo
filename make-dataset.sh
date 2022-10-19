@@ -1,8 +1,11 @@
 #!/bin/bash
+origin = $(pwd)
 read -p "Enter dataset path" fsocoPATH
 read -p "Enter new dataset path" newPATH
 
 cd $fsocoPATH
+
+python3 $origin/main.py --no-interactive
 
 mkdir -p $newPATH{images,images_val,labels}
 
@@ -25,3 +28,11 @@ while read f; do
 done < randomset
 
 rm randomset
+
+cd ..
+
+git clone https://github.com/ultralytics/yolov5
+
+cd yolov5
+
+python3 train.py --img 640 --batch 16 --epochs 3 --data $newPATH/dataset.yaml --weights yolov5s.pt
